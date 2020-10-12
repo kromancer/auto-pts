@@ -239,7 +239,6 @@ def test_cases(pts):
                   [TestFunc(btp.gap_set_io_cap, IOCap.display_only)],
                   generic_wid_hdl=sm_wid_hdl),
         ZTestCase("SM", "SM/MAS/OOB/BV-01-C",
-                  # Set CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY=y in prj.conf
                   pre_conditions +
                   [TestFunc(btp.gap_set_io_cap, IOCap.display_only),
                    TestFunc(btp.gap_oob_legacy_set_data, stack.gap.oob_legacy)],
@@ -336,6 +335,10 @@ def test_cases(pts):
         ZTestCase("SM", "SM/SLA/SIE/BV-01-C",
                   pre_conditions +
                   [TestFunc(btp.gap_set_io_cap, IOCap.no_input_output),],
+                  generic_wid_hdl=sm_wid_hdl),
+        ZTestCase("SM", "SM/MAS/SCOB/BV-01-C",
+                  pre_conditions +
+                  [TestFunc(btp.gap_set_io_cap, IOCap.display_only)],
                   generic_wid_hdl=sm_wid_hdl),
     ]
 

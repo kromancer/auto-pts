@@ -15,6 +15,7 @@
 
 import logging
 import sys
+import re
 
 from ptsprojects.stack import get_stack
 from pybtp import btp
@@ -111,6 +112,51 @@ def hdl_wid_143(desc):
     btp.gap_read_ctrl_info()
 
     return True
+
+
+def hdl_wid_145(desc):
+    """
+    Please configure IUT's OOB data flag with 'No remote OOB data present'
+
+    TODO: This is done by default but we should set it explicitly
+    """
+    return True
+
+
+def hdl_wid_146(desc):
+    """
+    Please configure IUT's OOB flag with 'Remote OOB data present'
+
+    TODO: The flag will be set when we handle wid 149 - set remote oob data
+    """
+    return True
+
+
+def hdl_wid_147(desc):
+    """
+    Please enter 16 bytes IUT's OOB Data (confirmation).
+    """
+    r, c = btp.gap_oob_sc_get_local_data()
+    return c
+
+
+def hdl_wid_148(desc):
+    """
+    Please enter 16 bytes IUT's OOB Key (random number).
+    """
+    r, c = btp.gap_oob_sc_get_local_data()
+    return r
+
+
+def hdl_wid_149(desc):
+    """
+    Please enter the following OOB confirmation and OOB random to the IUT.
+    """
+    m = re.findall(r"\[([A-Fa-f0-9]+)\]", desc)
+    conf, rand = m
+    btp.gap_oob_sc_set_remote_data(r=rand, c=conf)
+    return True
+
 
 def hdl_wid_154(desc):
     return True
